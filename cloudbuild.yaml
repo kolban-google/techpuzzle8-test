@@ -1,0 +1,12 @@
+steps:
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [ 'build', '-t', 'us-central1-docker.pkg.dev/techpuzzle8/image-repo/myimage', '.' ]
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [ 'push', 'us-central1-docker.pkg.dev/techpuzzle8/image-repo/myimage' ]
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: 'bash'
+    args:
+    - '-c'
+    - |-
+      gcloud compute instances stop techpuzzle8 --zone us-central1-a
+      gcloud compute instances start techpuzzle8 --zone us-central1-a
